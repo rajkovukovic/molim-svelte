@@ -1,31 +1,22 @@
 <script lang="ts">
-	import './lib/molim';
-	export let name: string;
+  import { molim } from './state';
+  import { rxify } from './lib/transformers/rxjs';
+  import Table from './Table.svelte';
+
+  const productStream = rxify<any[]>(molim.products as any);
+  const userStream = rxify<any[]>(molim.users as any);
+  const todoStream = rxify<any[]>(molim.todos as any);
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+  <Table data={$productStream} title="Products" />
+  <Table data={$userStream} title="Users" />
+  <Table data={$todoStream} title="Todos" />
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+  main {
+    padding: 1em;
+    margin: 0 auto;
+  }
 </style>
